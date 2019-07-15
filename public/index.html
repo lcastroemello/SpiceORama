@@ -1,10 +1,24 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <title>My imageboard (or is it yours?)</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="main">
+        <h1>{{name}}'s Imageboard 📷 </h1>
+        <h2>Latest Images!</h2>
+        <ul class='imagelist' v-if='images.length > 0' >
+            <li class='photocard' v-for='image in images'>
+                <img :src=image.url class='photo'>
+                <p class='title'> {{image.title}}</p>
+            </li>
+        </ul>
+        <p v-else>No images =(</p>
+
+    </div>
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
+    <script src='js/script.js'></script>
 </body>
 </html>

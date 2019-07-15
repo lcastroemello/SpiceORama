@@ -1,0 +1,49 @@
+.main {
+    display: grid;
+    grid-auto-rows: 3rem 2rem 1fr;
+    background: cornflowerblue;
+}
+
+h1 {
+    color: lightpink;
+    padding-left: 50px;
+    font-size: 5rem;
+    grid-row: 1/2;
+}
+
+h2 {
+    color: pink;
+    padding-left: 50px;
+    font-size: 3rem;
+    grid-row: 2/3;
+}
+
+.imagelist {
+    grid-row: 3/4;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+.photocard {
+    display: grid;
+    grid-auto-rows: 1fr 1rem;
+    margin: 2rem;
+    border: black 2px solid;
+}
+
+.photo {
+    grid-row: 1/2;
+}
+
+.title {
+    grid-row: 2/3;
+}
+
+@media screen (max-width 800px) {
+    .imagelist {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    }
+}
