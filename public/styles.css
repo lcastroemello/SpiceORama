@@ -1,6 +1,6 @@
 .main {
     display: grid;
-    grid-auto-rows: 3rem 2rem 1fr;
+    grid-auto-rows: 10rem 5rem 8rem 1fr;
     background: cornflowerblue;
 }
 
@@ -18,8 +18,21 @@ h2 {
     grid-row: 2/3;
 }
 
-.imagelist {
+input {
+    border-radius: 10px;
+    background-color: cornflowerblue;
+}
+
+.inputField {
     grid-row: 3/4;
+    display: inline;
+    padding-left: 50px;
+    font-size: 3rem;
+    padding-top: 1rem;
+}
+
+.imagelist {
+    grid-row: 4/5;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
@@ -30,14 +43,24 @@ h2 {
     grid-auto-rows: 1fr 1rem;
     margin: 2rem;
     border: black 2px solid;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .photo {
     grid-row: 1/2;
+    width: 20rem;
+    height: 20rem;
+    align-self: center;
+    text-align: center;
 }
 
 .title {
     grid-row: 2/3;
+    align-self: flex-start;
+    text-align: left;
+    font-size: 1.5rem;
 }
 
 @media screen (max-width 800px) {

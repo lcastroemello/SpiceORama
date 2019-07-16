@@ -8,6 +8,22 @@
     <div class="main">
         <h1>{{name}}'s Imageboard 📷 </h1>
         <h2>Latest Images!</h2>
+
+
+        <!-- - -->
+
+        <form class='inputField' method="post">
+            <!-- the name here needs to match the properties in data so that it binds the input field so that typing into that input field also means writing that name in data. It stores it in data automatically, it keeps track of what the users are typing into the imput field -->
+            <input v-model='title' name='title' placeholder='title' type="text"   >
+            <input v-model='description' name="description" placeholder='description' type="text" >
+            <input v-model='username' name="username" placeholder='username' type="text" >
+            <!-- //accept defines that our users can only upload IMAGES -->
+            <!-- We also need to handle this image in a different way, since it is a FILE and it is much bigger than any other info we are handling. For that I need an event handler (@change)-->
+            <input type="file" name="" value="" accept='image/*' @change='handleChange'>
+            <!-- using this @click (ex) is how we handle events in Vue and we define what it has to do in the Vue file -->
+            <button @click.prevent.default='handleClick'>SUBMIT</button>
+        </form>
+
         <ul class='imagelist' v-if='images.length > 0' >
             <li class='photocard' v-for='image in images'>
                 <img :src=image.url class='photo'>
@@ -15,6 +31,8 @@
             </li>
         </ul>
         <p v-else>No images =(</p>
+
+        <!-- - -->
 
     </div>
     <script src="/js/vue.js"></script>
