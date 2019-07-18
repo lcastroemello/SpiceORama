@@ -95,7 +95,6 @@ app.get("/myimageboard/:id", (req, res) => {
             let imgInfo = imgData;
             db.getCommentsByImgId(id).then(comments => {
                 let finalImgInfo = [imgInfo, comments];
-                console.log("testing concat ", finalImgInfo);
                 res.json(finalImgInfo);
             });
         })

@@ -44,10 +44,10 @@
         <div class="outPgComments">
             <div class="pgComments">
                 <div class="imageCardComment">
-                    <img class='imgInComment' :src=imageurl :alt=imagetitle>
-                    <h2 v-if='id'>{{id}}</h2>
-                    <p class='desInComment'>{{description}}</p>
-                    <p class='timeInComment'>Uploaded by {{username}} on {{timestamp}}</p>
+                    <img class='imgInComment' :src=imgInfo.url :alt=imgInfo.title>
+                    <h2 class='titleInComment'>{{imgInfo.title}}</h2>
+                    <p class='desInComment'>{{imgInfo.description}}</p>
+                    <p class='timeInComment'>Uploaded by {{imgInfo.username}} on {{imgInfo.created_at}}</p>
                 </div>
                 <form class="addComment" method="post">
                     <input class='commentInput' type="text" name="commentText" placeholder='Comment!'>
@@ -56,10 +56,11 @@
                     <button type="button" name="commentButton">SEND</button>
                 </form>
                 <div class="comments">
-                    <div class="eachComment">
-                        <h3>{{comment}}</h3>
-                        <p>{{comment_username}} on {{comment_timestamp}}</p>
+                    <div class="eachComment" v-if='commentInfo'>
+                        <h3>{{commentInfo.comment}}</h3>
+                        <p>{{commentInfo.username}} on {{commentInfo.created_at}}</p>
                     </div>
+                    <p v-else>Make the first comment!</p>
                 </div>
             </div>
         </div>
