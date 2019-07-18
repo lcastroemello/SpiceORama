@@ -51,13 +51,15 @@
                     </p>
                 </div>
                 <form class="addComment" method="post">
-                    <input class='commentInput' type="text" name="commentText" placeholder='Comment!'>
+                    <input v-model='comment' class='commentInput' type="text" name="commentText" placeholder='Comment!'>
                     <br>
-                    <input type="text" name="commentUsername" placeholder='Username'>
+                    <input v-model='comment_username' type="text" name="commentUsername" placeholder='Username'>
                     <button type="button" name="commentButton" @click.prevent.default='modalsend'>SEND</button>
                 </form>
+
+
                 <div class="comments">
-                    <ul class="eachComment" v-if='comments'>
+                    <ul class="eachComment" v-if='comments.length'>
                         <li v-for='element in comments'>
                             <h3>{{element.comment}}</h3>
                             <p>{{element.username}} on {{element.created_at}}</p>

@@ -11,7 +11,8 @@
                 comments: [],
                 comment: "",
                 comment_username: "",
-                comment_timestamp: ""
+                comment_timestamp: "",
+                img_id: ""
             };
         }, //end of data
         mounted: function() {
@@ -20,22 +21,10 @@
             axios
                 .get("/myimageboard/" + picId)
                 .then(function(resp) {
-                    var formData = new FormData();
-                    formData.append("url", resp.data[0].rows[0].url);
-                    formData.append("title", resp.data[0].rows[0].title);
-                    formData.append(
-                        "description",
-                        resp.data[0].rows[0].description
-                    );
-                    // let imgTime = moment(
-                    //     resp.data[0].rows[0].created_at,
-                    //     moment.ISO_8601
-                    // ).format("d MMM YYYY, h:mma");
-                    formData.append("timestamp", 2);
                     self.imgInfo = resp.data[0].rows[0];
                     self.comments = resp.data[1].rows;
-                    console.log("testing resp img", self.imgInfo);
-                    console.log("testing resp comment", self.comments);
+                    // console.log("testing resp img", self.imgInfo);
+                    // console.log("testing resp comment", self.comments);
                 })
                 .catch(function(err) {
                     console.log("err in get /commentmodal", err);
@@ -43,7 +32,21 @@
         }, //end of mounted
         methods: {
             modalsend: function() {
-                console.log("modal this", this);
+                var self = this;
+                let picId = self.$attrs.id;
+                let answerobj = {
+                    comments: this.comment,
+                    username: this.comment_username
+                };
+                console.log("this is answerobj", answerobj);
+                axios
+                    .post("/myimageboard/" + picId, answerobj)
+                    .then(resp => {
+                        console.log("testing resp modal post", resp);
+                    })
+                    .catch(function(err) {
+                        console.log("error in post/myimageboard:id ", err);
+                    });
             }
         }, //end of methods
         template: "#comments-template"

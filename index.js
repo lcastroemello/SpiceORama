@@ -8,7 +8,7 @@ var moment = require("moment");
 app.use(express.static("./public"));
 
 const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // --------------------------FormData API---------------
 
@@ -90,7 +90,7 @@ app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
 
 app.get("/myimageboard/:id", (req, res) => {
     const { id } = req.params;
-    console.log("getting id", id);
+    // console.log("getting id", id);
     db.getImgInfoById(id)
         .then(imgData => {
             let imgInfo = imgData;
@@ -106,7 +106,6 @@ app.get("/myimageboard/:id", (req, res) => {
                         moment.ISO_8601
                     ).format("d MMM YYYY, h:mma");
                 }
-                console.log("testing", finalImgInfo);
                 res.json(finalImgInfo);
             });
         })
@@ -115,8 +114,40 @@ app.get("/myimageboard/:id", (req, res) => {
         });
 }); // end of app.get commentmodal
 
-app.post("myimageboard/:id", (req, res) => {
-    console.log("testing modal post", req.body);
+app.post("/myimageboard/:id", (req, res) => {
+    const { id } = req.params;
+
+    let nId = id;
+    db.insertComment(req.body.comments, req.body.username, nId)
+        .then(info => {
+            console.log("comment info added to db ", nId);
+        })
+        .then(() => {
+            db.getImgInfoById(nId)
+                .then(imgData => {
+                    let imgInfo = imgData;
+                    db.getCommentsByImgId(nId).then(comments => {
+                        let finalImgInfo = [imgInfo, comments];
+                        finalImgInfo[0].rows[0].created_at = moment(
+                            finalImgInfo[0].rows[0].created_at,
+                            moment.ISO_8601
+                        ).format("d MMM YYYY, h:mma");
+                        for (var i = 0; i < finalImgInfo[1].rows.length; i++) {
+                            finalImgInfo[1].rows[i].created_at = moment(
+                                finalImgInfo[1].rows[i].created_at,
+                                moment.ISO_8601
+                            ).format("d MMM YYYY, h:mma");
+                        }
+                        res.json(finalImgInfo);
+                    });
+                })
+                .catch(err => {
+                    console.log("err in adding to db", err);
+                });
+        })
+        .catch(err => {
+            console.log("err in adding to db", err);
+        });
 });
 
 app.listen(8080, () => ca.neon("Oh, mama! Check THAT Vue!"));
