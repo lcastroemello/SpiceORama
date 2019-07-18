@@ -3,9 +3,11 @@ const app = express();
 const ca = require("chalk-animation");
 const db = require("./sql/imagedb");
 const s3 = require("./s3");
-const config = require("./config");
 
 app.use(express.static("./public"));
+
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // --------------------------FormData API---------------
 
@@ -33,9 +35,9 @@ var uploader = multer({
 
 // ---------RENDERING MY IMAGEBOARD------------------
 app.get("/myimageboard", function(req, res) {
-    db.getImgAndTitle()
+    db.getImgInfo()
         .then(info => {
-            console.log("testing db ", info);
+            // console.log("testing db ", info);
             res.json(info);
         })
         .catch(err => {
@@ -51,7 +53,7 @@ app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
     // const name = req.body.name;
     if (req.file) {
         const url = config.s3Url + req.file.filename;
-        console.log("getting info ", req.body);
+        // console.log("getting info ", req.body);
         db.insertImg(
             url,
             req.body.username,
@@ -62,9 +64,9 @@ app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
                 console.log("img info added to db ", info);
             })
             .then(() => {
-                db.getImgAndTitle()
+                db.getImgInfo()
                     .then(data => {
-                        console.log("testing our info rendered on post ", data);
+                        // console.log("testing our info rendered on post ", data);
                         res.json(data);
                         // file: req.file.filename
                         // success: true
@@ -82,5 +84,24 @@ app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
         });
     } //end of req.file if else
 }); //end of app.post
+
+// ---------------------COMMENTS MODAL-------------
+
+app.get("/myimageboard/:id", (req, res) => {
+    const { id } = req.params;
+    console.log("getting id", id);
+    db.getImgInfoById(id)
+        .then(imgData => {
+            let imgInfo = imgData;
+            db.getCommentsByImgId(id).then(comments => {
+                let finalImgInfo = [imgInfo, comments];
+                console.log("testing concat ", finalImgInfo);
+                res.json(finalImgInfo);
+            });
+        })
+        .catch(err => {
+            console.log("err in get myimageboard:id", err);
+        });
+}); // end of app.get commentmodal
 
 app.listen(8080, () => ca.neon("Oh, mama! Check THAT Vue!"));

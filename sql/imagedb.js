@@ -17,6 +17,14 @@ exports.insertImg = function(url, username, title, description) {
 
 //-------GETTING INFO from tables-----
 
-exports.getImgAndTitle = function() {
-    return db.query("SELECT url, title FROM images");
+exports.getImgInfo = function() {
+    return db.query("SELECT * FROM images ORDER BY id DESC");
+};
+
+exports.getImgInfoById = function(id) {
+    return db.query("SELECT * FROM images WHERE id=$1", [id]);
+};
+
+exports.getCommentsByImgId = function(img_id) {
+    return db.query("SELECT * FROM comments WHERE img_id=$1", [img_id]);
 };

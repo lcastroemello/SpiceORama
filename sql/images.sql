@@ -1,4 +1,6 @@
-DROP TABLE IF EXISTS images;
+---------------------------IMAGES TABLE----------------------------------
+
+DROP TABLE IF EXISTS images CASCADE;
 
 CREATE TABLE images(
     id SERIAL PRIMARY KEY,
@@ -12,8 +14,8 @@ CREATE TABLE images(
 INSERT INTO images (url, username, title, description) VALUES (
     'https://s3.amazonaws.com/spicedling/jAVZmnxnZ-U95ap2-PLliFFF7TO0KqZm.jpg',
     'funkychicken',
-    'Welcome to Berlin and the future!',
-    'This photo brings back so many great memories.'
+    'Curry!',
+    'Is it not great to have curry to spice our life up?'
 );
 
 INSERT INTO images (url, username, title, description) VALUES (
@@ -28,4 +30,16 @@ INSERT INTO images (url, username, title, description) VALUES (
     'discoduck',
     'Hello Berlin',
     'This is going to be worth a lot of money one day.'
+);
+
+-----------------------COMMENTS TABLE-----------------------------------
+
+DROP TABLE IF EXISTS comments;
+
+CREATE TABLE comments (
+    id SERIAL PRIMARY KEY,
+    img_id INTEGER REFERENCES images(id),
+    username VARCHAR(255) NOT NULL,
+    comment TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

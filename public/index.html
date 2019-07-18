@@ -5,38 +5,75 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- start of main -->
     <div class="main">
-        <h1>{{name}}'s Imageboard 📷 </h1>
-        <h2>Latest Images!</h2>
 
+        <!-- main page -->
+        <div class='welcome'>
 
-        <!-- - -->
+            <h1 class="manchete">{{name}}'s Imageboard 📷 </h1>
+            <h2>Latest Images!</h2>
 
-        <form class='inputField' method="post">
-            <!-- the name here needs to match the properties in data so that it binds the input field so that typing into that input field also means writing that name in data. It stores it in data automatically, it keeps track of what the users are typing into the imput field -->
-            <input v-model='title' name='title' placeholder='title' type="text"   >
-            <input v-model='description' name="description" placeholder='description' type="text" >
-            <input v-model='username' name="username" placeholder='username' type="text" >
-            <!-- //accept defines that our users can only upload IMAGES -->
-            <!-- We also need to handle this image in a different way, since it is a FILE and it is much bigger than any other info we are handling. For that I need an event handler (@change)-->
-            <input type="file" name="" value="" accept='image/*' @change='handleChange'>
-            <!-- using this @click (ex) is how we handle events in Vue and we define what it has to do in the Vue file -->
-            <button @click.prevent.default='handleClick'>SUBMIT</button>
-        </form>
+            <form class='inputField' method="post">
+                <input v-model='title' name='title' placeholder='title' type="text"   >
+                <input v-model='description' name="description" placeholder='description' type="text" >
+                <input v-model='username' name="username" placeholder='username' type="text" >
+                <input type="file" name="" value="" accept='image/*' @change='handleChange'>
+                <button @click.prevent.default='handleClick'>SUBMIT</button>
+            </form>
 
-        <ul class='imagelist' v-if='images.length > 0' >
-            <li class='photocard' v-for='image in images'>
-                <img :src=image.url class='photo'>
-                <p class='title'> {{image.title}}</p>
-            </li>
-        </ul>
-        <p v-else>No images =(</p>
+            <ul class='imagelist' v-if='images.length > 0' >
+                <li class='photocard' v-for='image in images'>
+                    <img :src=image.url class='photo' :alt=image.title @click='imgClick(image.id)'>
+                    <p class='title'> {{image.title}}</p>
+                </li>
+            </ul>
+            <p v-else>No images =(</p>
+        </div>
 
-        <!-- - -->
+        <!-- comment modal -->
+        <comment-modal v-if="commentOpen" :id='id' >
+
+        </comment-modal>
 
     </div>
+    <!-- end of main -->
+
+    <!-- comments modal template -->
+    <script id='comments-template' type="text/x-template">
+        <div class="outPgComments">
+            <div class="pgComments">
+                <div class="imageCardComment">
+                    <img class='imgInComment' :src=imageurl :alt=imagetitle>
+                    <h2 v-if='id'>{{id}}</h2>
+                    <p class='desInComment'>{{description}}</p>
+                    <p class='timeInComment'>Uploaded by {{username}} on {{timestamp}}</p>
+                </div>
+                <form class="addComment" method="post">
+                    <input class='commentInput' type="text" name="commentText" placeholder='Comment!'>
+                    <br>
+                    <input type="text" name="commentUsername" placeholder='Username'>
+                    <button type="button" name="commentButton">SEND</button>
+                </form>
+                <div class="comments">
+                    <div class="eachComment">
+                        <h3>{{comment}}</h3>
+                        <p>{{comment_username}} on {{comment_timestamp}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
+    <script src='/js/component.js'></script>
     <script src='js/script.js'></script>
+
+
+
+
+
 </body>
 </html>

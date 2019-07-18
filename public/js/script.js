@@ -7,7 +7,9 @@
             title: "",
             description: "",
             username: "",
-            file: null
+            file: null,
+            id: "",
+            commentOpen: false
         }, //end of data
         mounted: function() {
             var self = this;
@@ -20,7 +22,6 @@
                 .catch(function(err) {
                     console.log("err in GET /myimageboard: ", err);
                 });
-            // those parabrand
         }, //end of mounted COMMAAAA!!
         methods: {
             handleClick: function() {
@@ -47,7 +48,12 @@
             }, //end of handleClick COMMAAAA
             handleChange: function(e) {
                 this.file = e.target.files[0];
-            } //end of handleChange
-        }
+            }, //end of handleChange
+            imgClick: function(id) {
+                console.log("imgClick works", id);
+                this.id = id;
+                this.commentOpen = true;
+            } //end of imgClick
+        } //end of methods
     }); //end of new Vue
 })(); //end of ifi d
