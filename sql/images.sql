@@ -32,6 +32,11 @@ INSERT INTO images (url, username, title, description) VALUES (
     'This is going to be worth a lot of money one day.'
 );
 
+INSERT INTO comments (img_id, username, comment) VALUES (
+    '1',
+    'captain obvious',
+    'Well, it is tecnically an empty shaker. Put curry on it with your imagination!'
+);
 -----------------------COMMENTS TABLE-----------------------------------
 
 DROP TABLE IF EXISTS comments;

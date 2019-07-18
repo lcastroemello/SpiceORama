@@ -47,20 +47,23 @@
                     <img class='imgInComment' :src=imgInfo.url :alt=imgInfo.title>
                     <h2 class='titleInComment'>{{imgInfo.title}}</h2>
                     <p class='desInComment'>{{imgInfo.description}}</p>
-                    <p class='timeInComment'>Uploaded by {{imgInfo.username}} on {{imgInfo.created_at}}</p>
+                    <p class='timeInComment'>Uploaded by {{imgInfo.username}} on {{imgInfo.created_at}}
+                    </p>
                 </div>
                 <form class="addComment" method="post">
                     <input class='commentInput' type="text" name="commentText" placeholder='Comment!'>
                     <br>
                     <input type="text" name="commentUsername" placeholder='Username'>
-                    <button type="button" name="commentButton">SEND</button>
+                    <button type="button" name="commentButton" @click.prevent.default='modalsend'>SEND</button>
                 </form>
                 <div class="comments">
-                    <div class="eachComment" v-if='commentInfo'>
-                        <h3>{{commentInfo.comment}}</h3>
-                        <p>{{commentInfo.username}} on {{commentInfo.created_at}}</p>
-                    </div>
-                    <p v-else>Make the first comment!</p>
+                    <ul class="eachComment" v-if='comments'>
+                        <li v-for='element in comments'>
+                            <h3>{{element.comment}}</h3>
+                            <p>{{element.username}} on {{element.created_at}}</p>
+                        </li>
+                    </ul>
+                    <h3 v-else>Make the first comment!</h3>
                 </div>
             </div>
         </div>
@@ -69,11 +72,9 @@
 
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
+    <script src='moment.js'></script>
     <script src='/js/component.js'></script>
     <script src='js/script.js'></script>
-
-
-
 
 
 </body>

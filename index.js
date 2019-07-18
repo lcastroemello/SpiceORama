@@ -3,6 +3,7 @@ const app = express();
 const ca = require("chalk-animation");
 const db = require("./sql/imagedb");
 const s3 = require("./s3");
+var moment = require("moment");
 
 app.use(express.static("./public"));
 
@@ -95,6 +96,17 @@ app.get("/myimageboard/:id", (req, res) => {
             let imgInfo = imgData;
             db.getCommentsByImgId(id).then(comments => {
                 let finalImgInfo = [imgInfo, comments];
+                finalImgInfo[0].rows[0].created_at = moment(
+                    finalImgInfo[0].rows[0].created_at,
+                    moment.ISO_8601
+                ).format("d MMM YYYY, h:mma");
+                for (var i = 0; i < finalImgInfo[1].rows.length; i++) {
+                    finalImgInfo[1].rows[i].created_at = moment(
+                        finalImgInfo[1].rows[i].created_at,
+                        moment.ISO_8601
+                    ).format("d MMM YYYY, h:mma");
+                }
+                console.log("testing", finalImgInfo);
                 res.json(finalImgInfo);
             });
         })
@@ -102,5 +114,9 @@ app.get("/myimageboard/:id", (req, res) => {
             console.log("err in get myimageboard:id", err);
         });
 }); // end of app.get commentmodal
+
+app.post("myimageboard/:id", (req, res) => {
+    console.log("testing modal post", req.body);
+});
 
 app.listen(8080, () => ca.neon("Oh, mama! Check THAT Vue!"));
