@@ -9,15 +9,13 @@
             description: "",
             username: "",
             file: null,
-            id: "",
-            commentOpen: false
+            id: ""
         }, //end of data
         mounted: function() {
             var self = this;
             console.log("mounted");
             addEventListener("hashchange", function() {
                 self.imageId = location.hash.slice(1);
-                this.commentOpen = true;
                 console.log("the hash has changed");
             });
             axios
@@ -63,6 +61,7 @@
                 this.imageId = null;
                 location.hash = "";
                 history.replaceState(null, null, "");
+                console.log("testing closeModal PARENT");
             }
         } //end of methods
     }); //end of new Vue

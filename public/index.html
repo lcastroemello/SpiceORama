@@ -7,10 +7,10 @@
 </head>
 <body>
     <!-- start of main -->
-    <div class="main">
+    <div class="main" >
 
         <!-- main page -->
-        <div class='welcome' v-on:closeModal='closeModal'>
+        <div class='welcome' >
 
             <h1 class="manchete">👩‍🍳 SPICE-O-RAMA 👨‍🍳 </h1>
 
@@ -36,7 +36,7 @@
         </div>
 
         <!-- comment modal -->
-        <comment-modal v-if="imageId" :id='imageId' >
+        <comment-modal v-if="imageId" :id='imageId' v-on:close='closeModal'>
 
         </comment-modal>
 
@@ -45,7 +45,7 @@
 
     <!-- comments modal template -->
     <script id='comments-template' type="text/x-template">
-        <div class="outPgComments">
+        <div class="outPgComments" v-on:click='closeMe'>
             <div class="pgComments">
                 <div class="imageCardComment">
                     <img class='imgInComment' :src=imgInfo.url :alt=imgInfo.title>

@@ -52,8 +52,9 @@
                         console.log("error in post/myimageboard:id ", err);
                     });
             },
-            closeModal: function(e) {
-                this.$emit("closeModal", this.id, e.target.value);
+            closeMe: function() {
+                this.$emit("close");
+                console.log("testing closeModal CHILD");
             }
         }, //end of methods
         template: "#comments-template"
