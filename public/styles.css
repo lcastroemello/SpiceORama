@@ -5,7 +5,7 @@
 
 .welcome {
     display: grid;
-    grid-auto-rows: 10rem 5rem 8rem 1fr;
+    grid-auto-rows: 10rem 8rem 5rem 1fr;
     background: #2d4059;
     z-index: 1;
 }
@@ -14,10 +14,14 @@ h1 {
     color: #ea5455;
     padding-left: 50px;
     font-size: 5rem;
+    font-family: "Rock Salt", cursive;
 }
 
 .manchete {
     grid-row: 1/2;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 p {
@@ -27,8 +31,11 @@ p {
 h2 {
     color: #f07b3f;
     padding-left: 50px;
-    font-size: 3rem;
-    grid-row: 2/3;
+    font-size: 2rem;
+    grid-row: 3/4;
+    font-family: "Indie Flower", cursive;
+    align-items: flex-end;
+    display: flex;
 }
 
 .learning {
@@ -43,11 +50,20 @@ input {
 }
 
 .inputField {
-    grid-row: 3/4;
-    display: inline;
+    grid-row: 2/3;
+    display: inline-flex;
     padding-left: 50px;
-    font-size: 3rem;
+    font-size: 20rem;
     padding-top: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.formp {
+    font-size: 1rem;
+    color: #ffd460;
+    justify-content: flex-end;
+    padding-left: 1rem;
 }
 
 .imagelist {
@@ -98,8 +114,8 @@ input {
 }
 .pgComments {
     background-color: #f07b3f;
-    height: 75vh;
-    width: 75vw;
+    height: 85vh;
+    width: 85vw;
     z-index: 103;
     align-items: center;
     color: #2d4059;
@@ -171,6 +187,7 @@ input {
     background: rgba(45, 64, 89, 0.8);
     justify-content: flex-start;
     color: #ffd460;
+    overflow: scroll;
 }
 
 @media screen (max-width 800px) {

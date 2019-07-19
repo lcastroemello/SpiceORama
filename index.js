@@ -4,6 +4,7 @@ const ca = require("chalk-animation");
 const db = require("./sql/imagedb");
 const s3 = require("./s3");
 var moment = require("moment");
+const config = require("./config");
 
 app.use(express.static("./public"));
 
@@ -47,8 +48,6 @@ app.get("/myimageboard", function(req, res) {
 });
 
 // ---------------UPLOADING PICTURES----------------
-
-// A ordem que nós queremos que as coisas aconteçam é que a imagem enviada pelo usuário vá para o S3 e, somente depois, entre na nossa base de dados com a sua identidade (assim não arriscamos ter uma imagem na db sem ter a imagem itself para renderizar na tela. Isso é feito através de um MIDDLEWARE ou diretamente nessa função. Veja o middleware em s3.js - s3.upload)
 
 app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
     // const name = req.body.name;
@@ -116,10 +115,9 @@ app.get("/myimageboard/:id", (req, res) => {
 
 app.post("/myimageboard/:id", (req, res) => {
     const { id } = req.params;
-
     let nId = id;
     db.insertComment(req.body.comments, req.body.username, nId)
-        .then(info => {
+        .then(() => {
             console.log("comment info added to db ", nId);
         })
         .then(() => {

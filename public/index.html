@@ -3,36 +3,40 @@
 <head>
     <title>My imageboard (or is it yours?)</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Rock+Salt&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- start of main -->
     <div class="main">
 
         <!-- main page -->
-        <div class='welcome'>
+        <div class='welcome' v-on:closeModal='closeModal'>
 
-            <h1 class="manchete">{{name}}'s Imageboard 📷 </h1>
-            <h2>Latest Images!</h2>
+            <h1 class="manchete">👩‍🍳 SPICE-O-RAMA 👨‍🍳 </h1>
 
             <form class='inputField' method="post">
                 <input v-model='title' name='title' placeholder='title' type="text"   >
                 <input v-model='description' name="description" placeholder='description' type="text" >
                 <input v-model='username' name="username" placeholder='username' type="text" >
                 <input type="file" name="" value="" accept='image/*' @change='handleChange'>
-                <button @click.prevent.default='handleClick'>SUBMIT</button>
+                <button @click.prevent.default='handleClick'>SUBMIT</button><p class='formp'>  Add a new spice in our life! </p>
             </form>
+
+            <h2></h2>
 
             <ul class='imagelist' v-if='images.length > 0' >
                 <li class='photocard' v-for='image in images'>
-                    <img :src=image.url class='photo' :alt=image.title @click='imgClick(image.id)'>
-                    <p class='title'> {{image.title}}</p>
+                    <a :href="'#' + image.id">
+                        <img :src=image.url class='photo' :alt=image.title>
+                        <p class='title'> {{image.title}}</p>
+                    </a>
                 </li>
             </ul>
             <p v-else>No images =(</p>
         </div>
 
         <!-- comment modal -->
-        <comment-modal v-if="commentOpen" :id='id' >
+        <comment-modal v-if="imageId" :id='imageId' >
 
         </comment-modal>
 

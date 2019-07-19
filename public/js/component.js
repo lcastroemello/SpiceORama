@@ -42,11 +42,18 @@
                 axios
                     .post("/myimageboard/" + picId, answerobj)
                     .then(resp => {
-                        console.log("testing resp modal post", resp);
+                        console.log(
+                            "testing resp modal post",
+                            resp.data[1].rows
+                        );
+                        self.comments = resp.data[1].rows;
                     })
                     .catch(function(err) {
                         console.log("error in post/myimageboard:id ", err);
                     });
+            },
+            closeModal: function(e) {
+                this.$emit("closeModal", this.id, e.target.value);
             }
         }, //end of methods
         template: "#comments-template"

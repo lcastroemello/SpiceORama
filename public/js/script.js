@@ -3,6 +3,7 @@
         el: ".main",
         data: {
             name: "Livia",
+            imageId: location.hash.slice(1),
             images: [], //end of images
             title: "",
             description: "",
@@ -13,6 +14,12 @@
         }, //end of data
         mounted: function() {
             var self = this;
+            console.log("mounted");
+            addEventListener("hashchange", function() {
+                self.imageId = location.hash.slice(1);
+                this.commentOpen = true;
+                console.log("the hash has changed");
+            });
             axios
                 .get("/myimageboard")
                 .then(function(resp) {
@@ -46,14 +53,17 @@
                         console.log("error in post/upload: ", err);
                     });
             }, //end of handleClick COMMAAAA
-            handleChange: function(e) {
+            handleChange: function(e, id) {
                 this.file = e.target.files[0];
-            }, //end of handleChange
-            imgClick: function(id) {
-                console.log("imgClick works", id);
+                console.log("handlechange works", id);
                 this.id = id;
                 this.commentOpen = true;
-            } //end of imgClick
+            }, //end of handleChange
+            closeModal: function() {
+                this.imageId = null;
+                location.hash = "";
+                history.replaceState(null, null, "");
+            }
         } //end of methods
     }); //end of new Vue
 })(); //end of ifi d
