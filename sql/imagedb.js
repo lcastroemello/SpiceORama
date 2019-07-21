@@ -25,13 +25,23 @@ exports.insertComment = function(comment, username, img_id) {
 //-------GETTING INFO from tables-----
 
 exports.getImgInfo = function() {
-    return db.query("SELECT * FROM images ORDER BY id DESC");
+    return db.query("SELECT * FROM images ORDER BY id DESC LIMIT 10");
+};
+
+exports.getMoreImages = function(lastId) {
+    return db
+        .query("SELECT * FROM images WHERE id<$1 ORDER BY id DESC LIMIT 4", [
+            lastId
+        ])
+        .then(({ rows }) => rows);
 };
 
 exports.getImgInfoById = function(id) {
-    return db.query("SELECT * FROM images WHERE id=$1", [id]);
+    return db.query("SELECT * FROM images WHERE id=$1 ORDER BY id DESC", [id]);
 };
 
 exports.getCommentsByImgId = function(img_id) {
-    return db.query("SELECT * FROM comments WHERE img_id=$1", [img_id]);
+    return db.query("SELECT * FROM comments WHERE img_id=$1 ORDER BY id DESC", [
+        img_id
+    ]);
 };

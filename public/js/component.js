@@ -47,6 +47,8 @@
                             resp.data[1].rows
                         );
                         self.comments = resp.data[1].rows;
+                        self.comment = " ";
+                        self.comment_username = " ";
                     })
                     .catch(function(err) {
                         console.log("error in post/myimageboard:id ", err);
@@ -54,7 +56,11 @@
             },
             closeMe: function() {
                 this.$emit("close");
-                console.log("testing closeModal CHILD");
+                console.log("clicking outpg");
+            },
+            bubble: function(e) {
+                e.stopPropagation();
+                console.log("click pg");
             }
         }, //end of methods
         template: "#comments-template"

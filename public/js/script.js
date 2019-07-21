@@ -13,7 +13,6 @@
         }, //end of data
         mounted: function() {
             var self = this;
-            console.log("mounted");
             addEventListener("hashchange", function() {
                 self.imageId = location.hash.slice(1);
                 console.log("the hash has changed");
@@ -22,7 +21,7 @@
                 .get("/myimageboard")
                 .then(function(resp) {
                     self.images = resp.data.rows;
-                    console.log("resp.data after images: ", resp.data.rows);
+                    console.log("resp.data after images: ", self.images);
                 })
                 .catch(function(err) {
                     console.log("err in GET /myimageboard: ", err);
@@ -46,6 +45,9 @@
                             resp.data.rows
                         );
                         self.images = resp.data.rows;
+                        self.title = " ";
+                        self.description = " ";
+                        self.username = " ";
                     })
                     .catch(function(err) {
                         console.log("error in post/upload: ", err);
@@ -57,10 +59,26 @@
                 this.id = id;
                 this.commentOpen = true;
             }, //end of handleChange
+            more: function() {
+                let self = this;
+                console.log("more button works");
+                axios
+                    .get("/more/" + self.images[self.images.length - 1].id)
+                    .then(resp => {
+                        console.log(
+                            "testing LASTID",
+                            self.images[self.images.length - 1].id
+                        );
+                        self.images = self.images.concat(resp.data);
+                    })
+                    .catch(function(err) {
+                        console.log("error in more", err);
+                    });
+            },
             closeModal: function() {
                 this.imageId = null;
                 location.hash = "";
-                history.replaceState(null, null, "");
+                history.replaceState(null, null, " ");
                 console.log("testing closeModal PARENT");
             }
         } //end of methods

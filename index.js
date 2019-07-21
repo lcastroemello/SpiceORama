@@ -85,6 +85,20 @@ app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
     } //end of req.file if else
 }); //end of app.post
 
+// ------------------MORE BUTTON------------------------
+
+app.get("/more/:last", (req, res) => {
+    const { last } = req.params;
+    console.log("index lastId", last);
+    db.getMoreImages(last)
+        .then(data => {
+            res.json(data);
+        })
+        .catch(err => {
+            console.log("err in get more", err);
+        });
+}); //ed of more get
+
 // ---------------------COMMENTS MODAL-------------
 
 app.get("/myimageboard/:id", (req, res) => {

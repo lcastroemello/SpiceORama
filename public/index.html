@@ -1,9 +1,10 @@
 <!doctype html>
 <html>
 <head>
-    <title>My imageboard (or is it yours?)</title>
+    <title>SPICE-O-RAMA</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Rock+Salt&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- start of main -->
@@ -12,28 +13,32 @@
         <!-- main page -->
         <div class='welcome' >
 
-            <h1 class="manchete">👩‍🍳 SPICE-O-RAMA 👨‍🍳 </h1>
-
-            <form class='inputField' method="post">
-                <input v-model='title' name='title' placeholder='title' type="text"   >
-                <input v-model='description' name="description" placeholder='description' type="text" >
-                <input v-model='username' name="username" placeholder='username' type="text" >
-                <input type="file" name="" value="" accept='image/*' @change='handleChange'>
-                <button @click.prevent.default='handleClick'>SUBMIT</button><p class='formp'>  Add a new spice in our life! </p>
-            </form>
-
-            <h2></h2>
+            <h1 class="manchete"> SPICE<br>
+                -O-RAMA </h1>
 
             <ul class='imagelist' v-if='images.length > 0' >
                 <li class='photocard' v-for='image in images'>
                     <a :href="'#' + image.id">
-                        <img :src=image.url class='photo' :alt=image.title>
                         <p class='title'> {{image.title}}</p>
+                        <img :src=image.url class='photo' :alt=image.title>
                     </a>
                 </li>
             </ul>
             <p v-else>No images =(</p>
+            <button class='moreb' @click.prevent.default='more'> Want MORE spices?</button>
+            <form class='inputField' method="post">
+                <p class='formp'>  Add a new spice in our life! </p><input v-model='title' name='title' placeholder='title' type="text"   >
+                <input v-model='description' name="description" placeholder='description' type="text" >
+                <input v-model='username' name="username" placeholder='username' type="text" >
+                <input class='fileicon' type="file" name="file" value="fileshow" accept='image/*' @change='handleChange'>
+                <label for="file">Choose <br>a file</label>
+                <br>
+                <button
+                class='formb' @click.prevent.default='handleClick'>SUBMIT</button>
+            </form>
         </div>
+
+
 
         <!-- comment modal -->
         <comment-modal v-if="imageId" :id='imageId' v-on:close='closeModal'>
@@ -45,9 +50,9 @@
 
     <!-- comments modal template -->
     <script id='comments-template' type="text/x-template">
-        <div class="outPgComments" v-on:click='closeMe'>
-            <div class="pgComments">
-                <div class="imageCardComment">
+        <div class="outPgComments" v-on:click.prevent.stop='closeMe'>
+            <div class="pgComments" @click='bubble'>
+                <div class="imageCardComment" >
                     <img class='imgInComment' :src=imgInfo.url :alt=imgInfo.title>
                     <h2 class='titleInComment'>{{imgInfo.title}}</h2>
                     <p class='desInComment'>{{imgInfo.description}}</p>
@@ -55,7 +60,7 @@
                     </p>
                 </div>
                 <form class="addComment" method="post">
-                    <input v-model='comment' class='commentInput' type="text" name="commentText" placeholder='Comment!'>
+                    <input v-model='comment' class='commentInput' type="text" name="comment" placeholder='Comment!'>
                     <br>
                     <input v-model='comment_username' type="text" name="commentUsername" placeholder='Username'>
                     <button type="button" name="commentButton" @click.prevent.default='modalsend'>SEND</button>
