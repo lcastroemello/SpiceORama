@@ -25,17 +25,19 @@
                 </li>
             </ul>
             <p v-else>No images =(</p>
-            <button class='moreb' @click.prevent.default='more'> Want MORE spices?</button>
-            <form class='inputField' method="post">
-                <p class='formp'>  Add a new spice in our life! </p><input v-model='title' name='title' placeholder='title' type="text"   >
-                <input v-model='description' name="description" placeholder='description' type="text" >
-                <input v-model='username' name="username" placeholder='username' type="text" >
-                <input class='fileicon' type="file" name="file" value="fileshow" accept='image/*' @change='handleChange'>
-                <label for="file">Choose <br>a file</label>
-                <br>
-                <button
-                class='formb' @click.prevent.default='handleClick'>SUBMIT</button>
-            </form>
+            <button class='moreb' v-if="enoughImages" @click.prevent.default='more'> Want MORE spices?</button>
+            <div class="lastbar">
+                <form class='inputField' method="post">
+                    <p class='formp'>  Add a new spice in our life! </p><input v-model='title' name='title' placeholder='title' type="text"   >
+                    <input v-model='description' name="description" placeholder='description' type="text" >
+                    <input v-model='username' name="username" placeholder='username' type="text" >
+                    <input class='fileicon' type="file" name="file" value="fileshow" accept='image/*' @change='handleChange'>
+                    <!-- <label for="file">Choose <br>a file</label> -->
+                    <br>
+                    <button
+                    class='formb' @click.prevent.default='handleClick'>SUBMIT</button>
+                </form>
+            </div>
         </div>
 
 

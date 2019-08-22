@@ -15,7 +15,9 @@
                 img_id: ""
             };
         }, //end of data
+        // props: ["id"],
         mounted: function() {
+            console.log("testing imageId", this);
             var self = this;
             let picId = self.$attrs.id;
             axios
@@ -29,7 +31,7 @@
                 .catch(function(err) {
                     console.log("err in get /commentmodal", err);
                 });
-        }, //end of mounted
+        }, //end of mounte
         methods: {
             modalsend: function() {
                 var self = this;
@@ -63,6 +65,21 @@
                 console.log("click pg");
             }
         }, //end of methods
+        watch: {
+            picId: function() {
+                var self = this;
+                let picId = self.$attrs.id;
+                axios
+                    .get("/myimageboard/" + picId)
+                    .then(function(resp) {
+                        self.imgInfo = resp.data[0].rows[0];
+                        self.comments = resp.data[1].rows;
+                    })
+                    .catch(function(err) {
+                        console.log("err in get /commentmodal", err);
+                    });
+            }
+        },
         template: "#comments-template"
     }); //end of comment-modal vue component
 })(); //end of ifi

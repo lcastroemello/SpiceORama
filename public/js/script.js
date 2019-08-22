@@ -9,7 +9,8 @@
             description: "",
             username: "",
             file: null,
-            id: ""
+            id: "",
+            enoughImages: true
         }, //end of data
         mounted: function() {
             var self = this;
@@ -69,7 +70,11 @@
                             "testing LASTID",
                             self.images[self.images.length - 1].id
                         );
-                        self.images = self.images.concat(resp.data);
+                        if (resp.data.length) {
+                            self.images = self.images.concat(resp.data);
+                        } else {
+                            self.enoughImages = false;
+                        }
                     })
                     .catch(function(err) {
                         console.log("error in more", err);
